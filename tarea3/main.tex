@@ -1,0 +1,141 @@
+% Tarea #3 — Análisis formal del problema computacional complejo
+% Compilación: latexmk -pdf main.tex   (o: pdflatex main.tex, dos veces)
+\documentclass[11pt,a4paper,spanish]{article}
+
+% Se compila con XeLaTeX para que los acentos del código de los anexos se
+% lean directamente como UTF-8, sin conversiones.
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}[Scale=MatchLowercase]
+\usepackage[spanish,es-tabla,es-noquoting]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage[numbers]{natbib}
+\usepackage{hyperref}
+
+% --- Estilo de la página ---------------------------------------------------
+\onehalfspacing
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.4em}
+\setlength{\emergencystretch}{2em}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.8em}{}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+% La portada no lleva número; la numeración visible empieza en 2, como en la
+% Tarea 2 y como los puntos que enumera el enunciado de la Tarea 3.
+\setcounter{section}{1}
+
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{{\small CCPG1044 --- Inteligencia Artificial}}
+\fancyhead[R]{{\small Grupo 4 --- Tarea 3}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}}
+
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue!70!black,
+            pdftitle={Tarea 3 -- Analisis formal del problema}}
+% La bibliografía lleva el número de sección 11 y aparece en el índice.
+\renewcommand{\bibsection}{\section{\refname}}
+
+% --- Código de los anexos --------------------------------------------------
+\lstdefinestyle{codigo}{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{black!25},
+  xleftmargin=1em,
+  xrightmargin=1em,
+  numbers=left,
+  numberstyle=\tiny\color{black!60},
+  stepnumber=1,
+  showstringspaces=false,
+  tabsize=4,
+  extendedchars=true,
+  captionpos=b,
+  abovecaptionskip=6pt,
+  belowcaptionskip=4pt
+}
+\lstdefinestyle{python}{style=codigo,language=Python}
+\lstdefinestyle{plantuml}{style=codigo}
+\lstset{style=codigo}
+
+% ==========================================================================
+\begin{document}
+
+% ------------------------------------------------------------------ portada
+\begin{titlepage}
+\centering
+{\large ESCUELA SUPERIOR POLITÉCNICA DEL LITORAL\par}
+\vspace{0.4em}
+{\large Facultad de Ingeniería en Electricidad y Computación --- FIEC\par}
+\vspace{1.2em}
+{\large Curso CCPG1044 --- Inteligencia Artificial\par}
+\vspace{0.6em}
+{\normalsize Paralelo 2\par}
+
+\vspace{2.6cm}
+{\Large\bfseries Tarea \#3\par}
+\vspace{0.4em}
+{\Large\bfseries Análisis formal del problema computacional complejo\par}
+\vspace{1.0em}
+{\large Caracterización y clasificación retrospectiva de la gravedad de los siniestros de tránsito en Ecuador\par}
+
+\vspace{2.4cm}
+\begin{tabular}{ll}
+Grupo & 4 \\
+Integrantes & Jorge Bravo Vidal \\
+            & Bruno Romero Yagual \\
+            & David Sandoval Bernitta \\
+Profesor & Enrique Peláez J., Ph.D. \\
+Fecha de entrega & 22 de noviembre de 2026
+\end{tabular}
+
+\vspace{1.6cm}
+{\normalsize Guayaquil, Ecuador}
+\end{titlepage}
+
+\thispagestyle{empty}
+\newpage
+
+% -------------------------------------------------------------------- índice
+{\setlength{\parskip}{0pt}\linespread{1.0}\selectfont\tableofcontents}
+\newpage
+
+% ------------------------------------------------------------------ contenido
+\input{secciones/02_problema}
+\input{secciones/03_objetivo}
+\input{secciones/04_usuarios}
+\input{secciones/05_modelos}
+\input{secciones/06_datos}
+\input{secciones/07_requerimientos}
+\input{secciones/08_restricciones}
+\input{secciones/09_criterios}
+\input{secciones/10_alcance}
+\input{secciones/11_referencias}
+\input{secciones/12_ia}
+
+% ------------------------------------------------------------------- anexos
+\appendix
+\input{anexos/A_tablas}
+\input{anexos/B_codigo}
+
+\end{document}

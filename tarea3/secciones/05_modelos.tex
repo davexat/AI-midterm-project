@@ -1,0 +1,94 @@
+\section{Modelos de análisis y definición del problema}
+
+Los modelos de esta sección representan el problema, no su solución; el diseño del clasificador corresponde a la Tarea~4. Se usa UML porque permite cubrir con un mismo lenguaje quién interviene, qué datos existen y qué papel cumple cada uno, cómo se produce y se analiza el dato, en qué momento existe cada información y cómo circula entre los actores. Cada modelo responde, por tanto, a una pregunta distinta y la matriz de trazabilidad de la sección~\ref{sec:trazabilidad} los relaciona entre sí.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Inventario de modelos de análisis}
+\label{tab:modelos}
+\begin{tabularx}{\textwidth}{l l X l}
+\toprule
+Id & Modelo UML & Qué representa & Figura \\
+\midrule
+M1 & Casos de uso & Actores y qué esperan del proyecto & Figura~\ref{fig:m1} \\
+M2 & Clases de dominio & Datos del siniestro, relaciones y papel de cada variable & Figura~\ref{fig:m2} \\
+M3 & Actividad (con carriles) & Proceso desde el parte hasta el informe, con excepciones & Figura~\ref{fig:m3} \\
+M4 & Estados & Ciclo de vida del registro y momento en que existe cada información & Figura~\ref{fig:m4} \\
+M5 & Secuencia & Flujo de datos entre ente de control, ANT, INEC, equipo y usuarios & Figura~\ref{fig:m5} \\
+M6 & Matriz de trazabilidad & Objetivo $\rightarrow$ requerimiento $\rightarrow$ dato $\rightarrow$ actor $\rightarrow$ restricción $\rightarrow$ criterio & Sección~\ref{sec:trazabilidad} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Especificación de los modelos}
+
+\paragraph{M1. Casos de uso: quién espera qué.} La frontera del sistema es el análisis retrospectivo de gravedad. El registro del parte (CU1) y la publicación de la base mensual (CU2) quedan fuera, porque los ejecutan el ente de control y la ANT. Con ese insumo, el equipo contrasta los totales con los reportes oficiales (CU3), construye la etiqueta (CU4) y delimita la información permitida (CU5); sobre esa base compara la gravedad entre grupos (CU6) y evalúa la clasificación con casos posteriores (CU7). Los gobiernos locales y la ANT leen los resultados (CU8), y el equipo documenta las limitaciones (CU9). CU6 y CU7 incluyen CU4 y CU5; CU7 incluye además CU3 como verificación previa, y CU9 extiende las acciones de análisis. El INEC participa en CU3 como fuente de los totales de contraste.
+
+\begin{figure}[htbp]
+\centering
+\makebox[\textwidth][c]{\includegraphics[width=1.12\textwidth]{figuras/M1_casos_de_uso.png}}
+\caption{M1. Casos de uso del análisis retrospectivo de gravedad.}
+\label{fig:m1}
+\end{figure}
+
+\paragraph{M2. Clases de dominio: qué datos existen y qué papel cumple cada uno.} \texttt{Siniestro} se relaciona uno a uno con \texttt{Ubicación} y con \texttt{CircunstanciaDelEvento}, y uno a muchos con \texttt{VehiculoInvolucrado}; cada siniestro pertenece a un \texttt{EnteDeControl}. Esas cuatro clases forman el conjunto~A. \texttt{CausaProbable} se asocia con cero o una por siniestro y forma el conjunto~B, porque se asigna al investigar. \texttt{Participante}, de uno a 43 por siniestro, queda excluida: su atributo \texttt{condicion} contiene el valor \texttt{fallecido}. De los participantes se deriva \texttt{Resultado}, y de este la \texttt{Etiqueta}; ambos son el desenlace y nunca entran al modelo. Las coordenadas, la dirección y el nombre de la vía también se excluyen por privacidad. Los estereotipos de la figura indican el papel de cada clase.
+
+\begin{figure}[htbp]
+\centering
+\makebox[\textwidth][c]{\includegraphics[width=1.08\textwidth]{figuras/M2_clases_de_dominio.png}}
+\caption{M2. Clases del dominio del problema y clasificación de sus atributos.}
+\label{fig:m2}
+\end{figure}
+
+\paragraph{M3. Actividad: cómo se produce el dato y cómo se analiza.} El diagrama tiene tres carriles. El ente de control atiende el siniestro, levanta el parte con las circunstancias, los vehículos y la condición de los participantes, investiga la causa y envía el parte a la ANT. Esta consolida, valida y publica el archivo acumulado. El equipo descarga una copia con fecha y contrasta los totales con el INEC; si hay diferencia, la documenta y explica antes de continuar. Después construye la etiqueta, separa las entradas de los conjuntos~A y~B del desenlace y de las variables excluidas, caracteriza los datos y ejecuta OE1 y OE2 de forma independiente para integrar al final el informe. Las excepciones previstas son el parte incompleto, los valores \texttt{ND} o no identificados, el identificador repetido y el fallecimiento posterior al evento.
+
+\begin{figure}[htbp]
+\centering
+\makebox[\textwidth][c]{\includegraphics[width=1.15\textwidth,height=0.88\textheight,keepaspectratio]{figuras/M3_actividad.png}}
+\caption{M3. Proceso de registro, consolidación y análisis.}
+\label{fig:m3}
+\end{figure}
+
+\paragraph{M4. Estados: cuándo existe cada información.} Un siniestro ocurre, es atendido en el sitio y llega al estado \emph{parte levantado}, en el que se conocen la fecha, la hora, el lugar, el tipo de siniestro y los vehículos. Después pasa a \emph{causa asignada}, luego a \emph{consolidado por la ANT} y finalmente a \emph{publicado con corte al 30 de septiembre de 2026}. El instante retrospectivo del proyecto es \emph{parte levantado}. El recuento de víctimas existe ya en ese estado, pero no puede usarse como entrada porque es lo que se quiere clasificar.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth,height=0.86\textheight,keepaspectratio]{figuras/M4_estados.png}
+\caption{M4. Estados del registro e información disponible en cada uno.}
+\label{fig:m4}
+\end{figure}
+
+\paragraph{M5. Secuencia: cómo circula la información.} Intervienen el ente de control, la ANT, el equipo, el INEC y un usuario institucional. El ente envía el parte a la ANT; esta entrega el archivo mensual al equipo; el INEC aporta los totales del trimestre y el equipo los contrasta. Si la diferencia supera el 1\,\%, se documenta y explica antes de seguir. El equipo construye la etiqueta, caracteriza y evalúa, y entrega resultados agregados al usuario. El prototipo académico cierra el flujo con una consulta retrospectiva.
+
+\begin{figure}[htbp]
+\centering
+\makebox[\textwidth][c]{\includegraphics[width=1.10\textwidth]{figuras/M5_secuencia.png}}
+\caption{M5. Secuencia de mensajes entre los actores.}
+\label{fig:m5}
+\end{figure}
+
+\subsection{Matriz de trazabilidad}
+\label{sec:trazabilidad}
+
+La matriz relaciona cada objetivo con los requerimientos de la sección~7, los datos de la sección~6, los actores de la sección~4, las restricciones de la sección~8, los criterios de la sección~9 y los modelos de esta sección. Las celdas con varios identificadores indican que un mismo elemento interviene en más de un objetivo.
+
+\begin{longtable}{p{1.4cm}p{2.6cm}p{1.9cm}p{1.9cm}p{1.6cm}p{1.8cm}p{1.5cm}}
+\caption{Trazabilidad entre objetivos, requerimientos, datos, actores, restricciones, criterios y modelos}
+\label{tab:trazabilidad}\\
+\toprule
+Obj. & Requerimientos & Datos & Actores & Restr. & Criterios & Modelos \\
+\midrule
+\endfirsthead
+\multicolumn{7}{l}{\footnotesize\itshape (continuación)}\\
+\toprule
+Obj. & Requerimientos & Datos & Actores & Restr. & Criterios & Modelos \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+General & RF-01, RF-02, RF-03, RNF-01, RNF-05 & Archivo ANT completo & ANT, INEC, equipo & R-04, R-05, R-10 & CA-01, CA-08 & M1, M3, M5 \\
+OE1 & RF-04, RF-05, RF-10, RNF-03, RNF-06 & Conjunto A y etiqueta & Equipo; ANT, entes y gobiernos como lectores & R-04, R-07, R-08 & CA-03 & M1, M2, M3 \\
+OE2 & RF-03, RF-06, RF-07, RF-08, RF-09, RNF-01, RNF-02, RNF-04 & Conjuntos A y B y etiqueta & Equipo & R-01, R-02, R-03, R-06 & CA-02, CA-04, CA-05, CA-06, CA-07 & M2, M3, M4 \\
+OE3 & RF-11, RNF-04 & Resultados del modelo seleccionado & Usuarios institucionales & R-01, R-08, R-09 & CA-09 & M1, M5 \\
+\end{longtable}

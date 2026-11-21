@@ -1,0 +1,36 @@
+\section{Requerimientos del problema}
+
+Los requerimientos se derivan de lo anterior: los funcionales describen lo que debe lograr cualquier solución para que el problema quede resuelto, y los no funcionales, las cualidades que debe tener. Se marca como alta la prioridad de los que, de incumplirse, invalidarían las conclusiones: la etiqueta, la fuga de información y la evaluación temporal.
+
+\begin{longtable}{p{1.2cm}p{6.5cm}p{2.3cm}p{1.6cm}p{1.4cm}}
+\caption{Requerimientos funcionales y no funcionales}
+\label{tab:requerimientos}\\
+\toprule
+Id & Requerimiento & Origen & Obj. & Prior. \\
+\midrule
+\endfirsthead
+\multicolumn{5}{l}{\footnotesize\itshape (continuación)}\\
+\toprule
+Id & Requerimiento & Origen & Obj. & Prior. \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RF-01 & Contrastar los totales del archivo con los reportes oficiales de un periodo común & ANT, INEC; M3, M5 & General & Alta \\
+RF-02 & Construir la etiqueta con la definición y el corte de la sección~2.2 & Equipo; M2, M3; \texttt{FALLECIDOS} & General & Alta \\
+RF-03 & Excluir de las entradas toda variable derivada de las víctimas y documentar la lista final & M2, M4; sección~6.4 & General, OE2 & Alta \\
+RF-04 & Tratar y documentar valores faltantes, \texttt{ND} y categorías inconsistentes con reglas explícitas & Sección~6.3 & OE1, OE2 & Media \\
+RF-05 & Reportar por grupo la proporción de graves, el número de casos y una medida de incertidumbre & Conjunto A; M3 & OE1 & Alta \\
+RF-06 & Evaluar la clasificación con casos posteriores en el tiempo a los usados para obtenerla & Etiqueta; M3, M4 & OE2 & Alta \\
+RF-07 & Comparar al menos cinco tipos de modelos de aprendizaje automático clásico con dos referencias sencillas & Conjuntos A y B & OE2 & Alta \\
+RF-08 & Reportar métricas de la clase grave: PR-AUC, sensibilidad y precisión a un umbral declarado & Etiqueta & OE2 & Alta \\
+RF-09 & Verificar y reportar la calibración de las probabilidades estimadas & Etiqueta & OE2 & Media \\
+RF-10 & Presentar las circunstancias más asociadas con la gravedad de forma legible para quien no conoce la técnica & Resultados de OE1 y OE2 & OE1, OE2 & Media \\
+RF-11 & Ofrecer un prototipo de consulta con probabilidad, circunstancias asociadas y advertencia de uso retrospectivo & Modelo seleccionado; M1, M5 & OE3 & Media \\
+RNF-01 & Reproducibilidad: el mismo archivo y la misma versión producen las mismas cifras & Copia con fecha de descarga; Anexo~B & General, OE2 & Alta \\
+RNF-02 & Confiabilidad: evaluación con casos no usados para obtener la estimación y medidas apropiadas al desbalance & Etiqueta & OE2 & Alta \\
+RNF-03 & Trazabilidad: toda limpieza o exclusión queda registrada & Sección~6; Anexo~B & OE1 & Media \\
+RNF-04 & Interpretabilidad: cada circunstancia señalada debe poder explicarse & Resultados & OE2, OE3 & Media \\
+RNF-05 & Eficiencia: el análisis completo se ejecuta en un computador personal & Unos 6,4 millones de celdas & General & Media \\
+RNF-06 & Privacidad: solo se publican resultados agregados, nunca registros individuales & Restricción R-07 & OE1 & Alta \\
+\end{longtable}

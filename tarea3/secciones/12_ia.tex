@@ -1,0 +1,22 @@
+\section{Declaración de uso de IA generativa y bitácora de decisiones}
+
+\paragraph{Declaración.} Se usó la herramienta Claude (Anthropic) como apoyo en tres tareas: explorar con código la hoja principal del archivo de la ANT (conteos, consistencia y faltantes), comparar alternativas de definición y redactar borradores del informe. En esta revisión se empleó además un asistente de IA para reestructurar la redacción, generar los modelos UML y verificar las cifras con el script del Anexo~B. El grupo revisó cada afirmación y es responsable de la exactitud del contenido; las cifras de la sección~6 pueden reproducirse ejecutando ese script.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Recomendaciones de IA verificadas, corregidas o descartadas}
+\label{tab:bitacora}
+\begin{tabularx}{\textwidth}{p{0.7cm}X X p{3.0cm}}
+\toprule
+\# & Recomendación de la IA & Verificación & Resultado \\
+\midrule
+1 & Excluir las columnas de condición de los participantes porque revelan el desenlace & El conteo de condición \texttt{FALLECIDO} coincide con \texttt{FALLECIDOS} en los 17.236 registros (Tabla~\ref{tab:a4}) & Verificada y adoptada \\
+2 & Tratar la causa probable como un conjunto de información separado (B) y no como una variable más & Se contrastó con la retroalimentación del profesor y con las proporciones por causa, que van del 1,9\,\% al 23,1\,\% (Tabla~\ref{tab:a5}) & Corregida respecto a la Tarea 2 \\
+3 & Mantener la comparación entre primer y segundo semestre como criterio de estabilidad & Los datos cubren nueve meses (Tabla~\ref{tab:a1}) y el profesor lo observó & Descartada; se usan ventanas por meses \\
+4 & Tomar como válidas las cifras del borrador sin recalcularlas & Se ejecutó el script del Anexo~B sobre el archivo original; dos cifras del borrador no coincidían (el porcentaje de celdas vacías y el reparto de columnas entre evento y participantes) y se corrigieron & Corregida; el script queda como evidencia \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Las cuatro recomendaciones muestran el mismo criterio: ninguna se aceptó por venir de una herramienta de IA. Las que se adoptaron se comprobaron contra el archivo o contra la retroalimentación recibida, y las que no resistieron esa comprobación se descartaron o se corrigieron antes de redactar esta versión.

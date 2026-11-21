@@ -1,0 +1,31 @@
+\section{Restricciones y supuestos}
+
+Las restricciones delimitan lo que el proyecto puede hacer. Los supuestos son las condiciones bajo las cuales se formuló el problema y que, de no cumplirse, obligarían a reformularlo.
+
+\paragraph{Restricciones.}
+
+\begin{description}[leftmargin=1.6em,style=nextline,itemsep=0.25em]
+\item[R-01. Académica.] No se aceptan funciones, sistemas, interfaces de programación (APIs), \emph{prompts} o servicios ya desarrollados usados como ``cajas negras'' para resolver el problema. El código incluido en el Anexo~B está escrito por el grupo y usa únicamente operaciones de bibliotecas generales.
+\item[R-02. Académica.] No se usa aprendizaje profundo con estos datos tabulares.
+\item[R-03. Académica.] Un solo algoritmo poco profundo no basta: se comparan al menos cinco tipos de modelos de aprendizaje automático clásico.
+\item[R-04. De datos.] Un solo periodo (01/01 al 30/09/2026), registros administrativos y gravedad medida en el lugar de los hechos.
+\item[R-05. Temporal.] Los nueve meses disponibles no sostienen conclusiones sobre dos semestres completos ni sobre la variabilidad anual.
+\item[R-06. Metodológica.] La evaluación debe ser temporal y usar métricas de la clase grave.
+\item[R-07. Legal y de privacidad.] Se usa información pública con fines académicos; se excluyen los campos personales y de ubicación exacta conforme a la Ley Orgánica de Protección de Datos Personales \cite{ref5}, y solo se publican resultados agregados.
+\item[R-08. Ética.] Los resultados describen asociaciones, no causas ni responsabilidades. No deben usarse para estigmatizar provincias, cantones o conductores, ni para sancionar.
+\item[R-09. Operativa.] El proyecto no produce un sistema operativo para las autoridades. Un uso real exigiría actualizar datos, validar con nuevos periodos y definir responsables.
+\item[R-10. De recursos y tiempo.] Equipos personales sin infraestructura especial y un plazo de dos a tres semanas para el desarrollo posterior a esta tarea.
+\end{description}
+
+\paragraph{Supuestos.}
+
+\begin{description}[leftmargin=1.6em,style=nextline,itemsep=0.25em]
+\item[H-01.] Los entes de control registran de forma sistemática los fallecidos en el sitio; de no ser así, la etiqueta subestima la gravedad en algunas zonas.
+\item[H-02.] La fecha, la hora y la ubicación están registradas con corrección razonable.
+\item[H-03.] Los criterios de registro son consistentes durante el periodo. La variación descrita en la sección~6.2 pone en duda este supuesto.
+\item[H-04.] La definición de fallecido no cambió durante el periodo.
+\item[H-05.] La convención de la ANT descrita en la sección~2.2 hace que la etiqueta sea equivalente a ``fallecido en el lugar de los hechos''.
+\item[H-06.] El archivo descargado es una copia fiel y estable de la publicación de la ANT.
+\end{description}
+
+Entre estas restricciones hay tensiones que conviene explicitar. R-01 puede chocar con RNF-05 si algún modelo resulta costoso de ejecutar; R-05 limita lo que puede concluirse sobre estabilidad; y R-07 excluye información que podría mejorar la clasificación. En los tres casos se prioriza la restricción legal o académica y se declara el costo sobre el desempeño. La tensión entre R-01 y RNF-05, además, debe resolverse en la Tarea~4, cuando se concretice qué bibliotecas de aprendizaje automático se usan y se justifique que su empleo no equivale a delegar la solución en una caja negra.

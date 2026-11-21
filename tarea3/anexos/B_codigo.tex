@@ -1,0 +1,17 @@
+\section{Código y fuentes de los modelos}
+
+Este anexo contiene el código que produce las tablas del Anexo~A y las fuentes PlantUML de los cinco modelos de la sección~5. Para reproducir las cifras se necesita Python con \texttt{pandas} y \texttt{openpyxl}; basta con ejecutar \texttt{python analisis\_tarea3.py} desde la carpeta \texttt{codigo}. El programa comprueba las invariantes antes de escribir las tablas: si el archivo cambiara y las cifras dejaran de coincidir, se detiene con un error en lugar de generar un informe inconsistente.
+
+\lstinputlisting[style=python,caption={Código de verificación y generación de las tablas A1 a A7 (\texttt{codigo/analisis\_tarea3.py})},label={lst:analisis}]{codigo/analisis_tarea3.py}
+
+Las figuras de la sección~5 se generaron con PlantUML. Se incluyen las cinco fuentes para que los modelos puedan revisarse y modificarse sin depender de un archivo de dibujo cerrado.
+
+\lstinputlisting[style=plantuml,caption={M1. Casos de uso (\texttt{uml/M1\_casos\_de\_uso.puml})}]{uml/M1_casos_de_uso.puml}
+
+\lstinputlisting[style=plantuml,caption={M2. Clases de dominio (\texttt{uml/M2\_clases.puml})}]{uml/M2_clases.puml}
+
+\lstinputlisting[style=plantuml,caption={M3. Actividad (\texttt{uml/M3\_actividad.puml})}]{uml/M3_actividad.puml}
+
+\lstinputlisting[style=plantuml,caption={M4. Estados (\texttt{uml/M4\_estados.puml})}]{uml/M4_estados.puml}
+
+\lstinputlisting[style=plantuml,caption={M5. Secuencia (\texttt{uml/M5\_secuencia.puml})}]{uml/M5_secuencia.puml}

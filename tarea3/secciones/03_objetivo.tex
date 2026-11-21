@@ -1,0 +1,19 @@
+\section{Objetivo actualizado y medible}
+
+El objetivo general se deriva directamente de la pregunta formulada en la sección~2.1:
+
+\begin{quote}
+\emph{Evaluar en qué medida las circunstancias registradas al levantar el parte permiten clasificar retrospectivamente cuáles de los 17.236 siniestros registrados por la ANT entre el 1 de enero y el 30 de septiembre de 2026 tuvieron al menos un fallecido en el lugar de los hechos, comparando modelos de aprendizaje automático clásico con referencias sencillas en casos posteriores en el tiempo.}
+\end{quote}
+
+La medición de ese objetivo exige tres pasos distintos, que se formulan como objetivos específicos.
+
+\begin{description}[leftmargin=1.6em,style=nextline]
+\item[OE1. Caracterizar la variabilidad de la gravedad.] Calcular la proporción de siniestros graves por grupos definidos con variables del conjunto~A, informando para cada grupo el número de casos y una medida de su incertidumbre. Se mide con los grupos de la Tabla~\ref{tab:a5} y se acepta solo si se cumple el criterio CA-03.
+
+\item[OE2. Evaluar la clasificación.] Comparar al menos cinco tipos de modelos de aprendizaje automático clásico con dos referencias sencillas ---la proporción global y una regla basada solo en el tipo de siniestro---, con corte temporal y métricas de la clase grave, y repetir la comparación con el conjunto~B para medir el aporte de la causa probable. Los criterios CA-02 a CA-07 definen cuándo la comparación es suficiente.
+
+\item[OE3. Comunicar el resultado.] Exponer el modelo seleccionado en un prototipo académico de consulta que devuelva la probabilidad estimada, las circunstancias más asociadas y una advertencia de uso retrospectivo. Su comprobación es el criterio CA-09.
+\end{description}
+
+Los tres objetivos se apoyan en los mismos datos y en las mismas definiciones, pero responden a preguntas diferentes: OE1 describe, OE2 compara y OE3 comunica. Por eso sus resultados no se mezclan en una sola tabla y cada uno tiene su propia evidencia en la sección~9.
