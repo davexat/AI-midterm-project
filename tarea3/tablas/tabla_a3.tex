@@ -1,0 +1,22 @@
+\begin{longtable}{p{3.0cm}p{5.4cm}p{4.8cm}}
+\caption{Calidad de los registros y tratamiento previsto}\label{tab:a3}\\
+\toprule
+Aspecto & Evidencia & Tratamiento previsto \\
+\midrule
+\endfirsthead
+\multicolumn{3}{l}{\footnotesize\itshape (continuación)}\\
+\toprule
+Aspecto & Evidencia & Tratamiento previsto \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Variables del evento sin vacíos & Fecha, hora, provincia, cantón, zona, tipo de siniestro, causa y ente de control & Se usan tal como están \\
+Jerarquía y ubicación de la vía & \texttt{ND} en 11.445 registros (66,4\,\%); 14 con valor 0 y 1 vacío & Se trata como categoría propia; el valor 0 se agrupa con \texttt{ND} \\
+Tipo del primer vehículo no identificado & 3.870 registros (22,5\,\%) & Se trata como categoría propia y se conserva \\
+Tipo de siniestro con dos escrituras & 10 registros con \texttt{colisión} en minúscula & Se unifican con \texttt{COLISIÓN} \\
+Hora almacenada como texto & 5 registros & Se convierten a hora y se incorporan a la franja horaria \\
+Identificador repetido & 1 identificador (\texttt{MCU00139082026}) en dos siniestros de fechas distintas & Se conservan ambas filas; no se usa el identificador como llave \\
+Filas duplicadas & 0 & No se elimina ninguna fila \\
+Coordenadas & Sin vacíos y dentro de un rango plausible & No se usan (restricción R-07) \\
+\end{longtable}

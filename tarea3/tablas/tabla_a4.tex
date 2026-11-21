@@ -1,0 +1,23 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Contraste con cifras oficiales y verificación de fuga}
+\label{tab:a4}
+\begin{tabular}{p{5.1cm}p{2.0cm}p{5.4cm}p{1.4cm}}
+\toprule
+Concepto & Archivo & Referencia & Dif. \\
+\midrule
+\addlinespace[2pt]\multicolumn{4}{l}{\textit{Contraste con cifras oficiales, enero a marzo de 2026}}\\
+Siniestros & 4.789 & INEC: 4.789 & 0\,\% \\
+Lesionados & 4.032 & INEC: 4.032 & 0\,\% \\
+Fallecidos & 603 & INEC: 603 & 0\,\% \\
+\addlinespace
+Siniestros, enero a mayo de 2026 & 8.718 & ANT: 8.718 & 0\,\% \\
+\addlinespace[2pt]\multicolumn{4}{l}{\textit{Verificación de fuga de información}}\\
+Condición \texttt{FALLECIDO} y columna FALLECIDOS & 17.236 de 17.236 & Coincidencia exacta & 100\,\% \\
+Condición \texttt{LESIONADO} y columna LESIONADOS & 17.236 de 17.236 & Coincidencia exacta & 100\,\% \\
+Categorías de la columna CONDICIÓN & 4 & FALLECIDO, ILESO, LESIONADO, NO IDENTIFICADO & --- \\
+\bottomrule
+\end{tabular}
+\par\vspace{2pt}{\footnotesize Referencias: INEC [1] y ANT [7] para los totales; [2] para el archivo. La segunda parte muestra que la condición de los participantes contiene el desenlace y no puede usarse como entrada. Cálculo propio (Anexo B).}
+\end{table}
