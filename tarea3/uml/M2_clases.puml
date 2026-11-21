@@ -1,0 +1,70 @@
+@startuml M2_clases_de_dominio
+' Figura 2: clases del dominio del problema con el papel de cada atributo.
+' Estereotipos: A = entrada del conjunto A, B = entrada solo del conjunto B,
+' desenlace = nunca es entrada, excluida = fuera del análisis.
+skinparam defaultFontSize 16
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+hide empty methods
+
+class Siniestro <<A>> {
+  id : texto
+  fecha : fecha
+  hora : hora
+  dia : texto
+  feriado : booleano
+}
+class Ubicacion <<A>> {
+  provincia : texto
+  canton : texto
+  zona : {urbana, rural}
+  zonaPlanificacion : texto
+  jerarquiaVia : texto
+}
+class CircunstanciaDelEvento <<A>> {
+  tipoDeSiniestro : texto
+  numeroDeVehiculos : entero
+}
+class VehiculoInvolucrado <<A>> {
+  tipo : texto
+  servicio : texto
+}
+class EnteDeControl <<A>> {
+  codigo : texto
+}
+class CausaProbable <<B>> {
+  codigo : texto
+  descripcion : texto
+}
+class Participante <<excluida>> {
+  rol : texto
+  condicion : {ileso, lesionado, fallecido, no identificado}
+  edad : entero
+  sexo : texto
+  casco : booleano
+  cinturon : booleano
+}
+class Resultado <<desenlace>> {
+  lesionados : entero
+  fallecidos : entero
+}
+class Etiqueta <<desenlace>> {
+  grave : booleano
+}
+
+Siniestro "1" -- "1" Ubicacion
+Siniestro "1" -- "1" CircunstanciaDelEvento
+Siniestro "1" -- "1..*" VehiculoInvolucrado
+Siniestro "*" -- "1" EnteDeControl
+Siniestro "1" -- "0..1" CausaProbable : se asigna al investigar
+Siniestro "1" -- "1..43" Participante
+
+Participante ..> Resultado : se cuenta
+Resultado ..> Etiqueta : fallecidos >= 1
+
+note bottom of Participante
+  La condición contiene el valor
+  "fallecido": usar la columna
+  entregaría la respuesta.
+end note
+@enduml

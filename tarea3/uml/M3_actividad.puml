@@ -1,0 +1,45 @@
+@startuml M3_actividad
+' Figura 3: proceso desde el levantamiento del parte hasta el informe,
+' con los tres carriles y las excepciones previstas.
+skinparam defaultFontSize 18
+skinparam shadowing false
+skinparam activity {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+  DiamondBackgroundColor #F5F5F5
+}
+
+|Ente de control|
+start
+:Atender el siniestro en el sitio;
+:Levantar el parte\n(fecha, hora, lugar, tipo, vehículos,\nparticipantes y condición);
+:Investigar la causa probable;
+note right
+  Excepciones: parte incompleto,
+  valores "ND" o "no identificado",
+  identificador repetido y
+  fallecimiento posterior al evento.
+end note
+
+|ANT|
+:Consolidar y validar los registros;
+:Publicar el archivo mensual acumulado;
+
+|Equipo analista|
+:Descargar una copia con fecha;
+:Contrastar los totales con el INEC;
+if (¿la diferencia\nes mayor al 1 %?) then (sí)
+  :Documentar y explicar\nla diferencia;
+else (no)
+endif
+:Construir la etiqueta (FALLECIDOS >= 1);
+:Separar las entradas A y B\ndel desenlace y de las excluidas;
+:Caracterizar los datos;
+fork
+  :Comparar la gravedad\nentre grupos (OE1);
+fork again
+  :Evaluar la clasificación\ncon casos posteriores (OE2);
+end fork
+:Integrar el informe\ncon sus limitaciones;
+stop
+@enduml

@@ -1,0 +1,49 @@
+@startuml M1_casos_de_uso
+' Figura 1: actores y casos de uso. CU1 y CU2 quedan fuera de la frontera
+' porque los ejecutan entes externos; el proyecto consume su resultado.
+skinparam defaultFontSize 19
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+}
+
+actor "Ente de control\n(Policía, CTE,\nmunicipios)" as EC
+actor "ANT" as ANT
+actor "INEC" as INEC
+actor "Gobierno autónomo\ndescentralizado" as GAD
+actor "Equipo analista" as EQ
+
+usecase "CU1 Registrar parte" as CU1
+usecase "CU2 Consolidar y publicar\nla base mensual" as CU2
+
+rectangle "Análisis retrospectivo de la gravedad\n(alcance del proyecto)" {
+  usecase "CU3 Contrastar totales\ncon reportes oficiales" as CU3
+  usecase "CU4 Construir la etiqueta" as CU4
+  usecase "CU5 Delimitar la información\npermitida" as CU5
+  usecase "CU6 Comparar gravedad\nentre grupos" as CU6
+  usecase "CU7 Evaluar la clasificación\ncon casos posteriores" as CU7
+  usecase "CU8 Consultar el resultado\nen el prototipo" as CU8
+  usecase "CU9 Documentar\nlas limitaciones" as CU9
+}
+
+EC --> CU1
+ANT --> CU2
+INEC --> CU3
+GAD --> CU8
+ANT --> CU8
+EQ --> CU3
+EQ --> CU4
+EQ --> CU5
+EQ --> CU6
+EQ --> CU7
+EQ --> CU9
+
+CU6 ..> CU4 : <<include>>
+CU6 ..> CU5 : <<include>>
+CU7 ..> CU3 : <<include>>
+CU7 ..> CU5 : <<include>>
+CU8 ..> CU7 : <<include>>
+CU9 ..> CU7 : <<extend>>
+@enduml
