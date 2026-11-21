@@ -1,0 +1,73 @@
+DECISIONES PENDIENTES — No forman parte del informe
+====================================================
+
+Este archivo NO se entrega con el reporte. Contiene únicamente lo que el
+asistente no podía decidir por el grupo. El cuerpo de "Tarea #3 - final.pdf"
+está redactado como texto definitivo: no tiene recuadros de sugerencia,
+marcas [PENDIENTE] ni frases condicionales. Cada punto de abajo indica la
+sección exacta que se tocaría si se decide cambiar algo.
+
+---------------------------------------------------------------------
+A. Datos que solo el grupo conoce (confirmar antes de subir)
+---------------------------------------------------------------------
+
+A1. Número de grupo.
+    Dónde: portada y encabezado de todas las páginas ("Grupo 4").
+    Acción: confirmar que Aula Virtual asignó el grupo 4. Si no, cambiar
+    esos dos lugares. No afecta a ninguna cifra ni a ningún modelo.
+
+A2. Fecha exacta de descarga del archivo de la ANT.
+    Dónde: sección 2.2, fila "Fecha de corte" de la Tabla 1.
+    Texto actual: "descargado en octubre de 2026".
+    Acción: reemplazar "octubre de 2026" por la fecha exacta si el grupo
+    la registró. Conviene además guardar una copia local con ese nombre.
+
+A3. Enlaces de las referencias [3], [4], [6] y [7].
+    Dónde: sección 11.
+    Acción: abrir cada URL y comprobar que sigue vigente. No se verificaron
+    desde este entorno porque requieren salir de la carpeta del proyecto.
+
+---------------------------------------------------------------------
+B. Propuestas ya incorporadas al texto que el grupo puede revertir
+---------------------------------------------------------------------
+
+B1. Conjunto A como escenario principal y B (con causa probable) como
+    contraste.
+    Dónde: secciones 2.3 y 2.4 (decisión D1 y D2); tabla 6.4; Anexo A.
+    Si se rechaza: invertir los papeles y actualizar la fila OE2 de la
+    matriz de trazabilidad (sección 5.2) y el criterio CA-04.
+
+B2. Corte temporal enero-junio / julio / agosto-septiembre con umbral
+    fijado en validación.
+    Dónde: sección 2.4 (D4), sección 9 (CA-05), Tablas A6 y A7.
+    Si se rechaza: sustituir por validación cruzada por bloques de meses,
+    manteniendo el corte como comprobación adicional.
+
+B3. Umbrales de los criterios: 30 casos mínimos por grupo (CA-03),
+    diferencia máxima de calibración 0,05 (CA-06) y variación de PR-AUC
+    menor que 0,05 entre ventanas (CA-07).
+    Dónde: sección 9.
+    Estado: redactados como umbrales fijados antes de evaluar, que es lo
+    que exige el criterio. Acción: ratificarlos antes de ver los resultados
+    de prueba; si se cambian, debe quedar registro del cambio.
+
+B4. Objetivo OE3 y prototipo académico de consulta.
+    Dónde: sección 3 (OE3), sección 7 (RF-11), sección 9 (CA-09),
+    sección 10 y matriz de trazabilidad.
+    Razón por la que se conservó: la retroalimentación del profesor
+    menciona "su interfaz". Si el grupo decide no hacerlo, hay que quitar
+    esas cuatro referencias a la vez; dejar solo una quedaría incoherente.
+
+---------------------------------------------------------------------
+C. Decisiones que ya no están abiertas
+---------------------------------------------------------------------
+
+- La etiqueta es binaria (al menos un fallecido en sitio) y no ordinal.
+  Solo 159 siniestros tienen dos o más fallecidos (Tabla A1).
+- Las columnas CONDICION_1 a CONDICION_43 quedan excluidas: coinciden
+  exactamente con FALLECIDOS y LESIONADOS en los 17.236 registros (Tabla A4).
+- La estabilidad se mide con ventanas mensuales del mismo año, no con
+  comparación de semestres: solo hay nueve meses de datos.
+- Las cifras de la sección 6 se recalculen con el Anexo B; dos valores del
+  borrador anterior estaban mal y ya están corregidos (82,3 % -> 82,6 %
+  de celdas vacías y 74 + 301 -> 73 + 301 columnas).

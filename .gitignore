@@ -1,0 +1,33 @@
+# Entorno de Python y cachés
+.venv/
+__pycache__/
+*.py[cod]
+
+# Borradores y archivos temporales de revisión
+_work/
+_dump.txt
+
+# Archivos auxiliares generados por LaTeX
+*.aux
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.log
+*.out
+*.toc
+*.xdv
+*.synctex.gz
+
+# PDF duplicado: el entregable es "Tarea #3 - final.pdf"
+tarea3/main.pdf
+
+# Herramienta descargada (22 MB; se puede volver a descargar)
+tarea3/uml/plantuml.jar
+
+# Datos y documentos originales del curso (no se versionan)
+08. BDD_Septiembre_2026_SM.xlsx
+IA_tarea_2_Final_2.pdf
+Rubrica Tarea #3.pdf
+Tarea #3.pdf
+Tarea #3 - borrador.docx

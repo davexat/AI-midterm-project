@@ -1,0 +1,60 @@
+LEEME — Tarea 3 en LaTeX
+========================
+
+ARCHIVOS
+
+  main.tex                  fuente principal (portada, índice y capítulos)
+  secciones/                12 secciones del informe
+  anexos/                   Anexo A (tablas) y Anexo B (código y UML)
+  tablas/                   A1 a A7, generadas por el script
+  figuras/                  M1 a M5 en PNG (PlantUML, 200 dpi)
+  uml/                      fuentes .puml y plantuml.jar
+  codigo/analisis_tarea3.pycalcula y verifica todas las cifras
+  main.pdf                  PDF compilado
+  Tarea #3 - final.pdf      copia del anterior con nombre para Aula Virtual
+  decisiones_pendientes.txt lo que aún debe confirmar el grupo (NO entregar)
+
+
+COMPILAR
+
+  Se usa XeLaTeX porque los acentos del código de los anexos se leen como
+  UTF-8 sin conversiones. Con el MiKTeX instalado en esta máquina:
+
+      cd tarea3
+      xelatex -interaction=nonstopmode main.tex
+      xelatex -interaction=nonstopmode main.tex
+
+  Dos pasadas son necesarias para que el índice y las referencias cruzadas
+  queden resueltos. También funciona: latexmk -xelatex -pdf main.tex.
+
+
+RECALCULAR LAS TABLAS
+
+  Desde la carpeta tarea3:
+
+      ..\.venv\Scripts\python.exe codigo\analisis_tarea3.py
+
+  Requiere pandas y openpyxl. El script lee el archivo original que está en
+  la carpeta padre, comprueba las invariantes (17.236 filas, 1.656 graves,
+  603 fallecidos en el primer trimestre, coincidencia exacta de CONDICION
+  con FALLECIDOS y LESIONADOS) y reescribe los archivos de tablas/. Si una
+  comprobación falla, se detiene en lugar de generar cifras inconsistentes.
+  Después de recalcular hay que compilar de nuevo el PDF.
+
+
+REGENERAR LOS DIAGRAMAS
+
+  Desde la carpeta tarea3/uml:
+
+      java -jar plantuml.jar -charset UTF-8 -tpng -r 200 -o ../figuras *.puml
+
+  plantuml.jar quedó descargado en esa carpeta para no depender de la red.
+
+
+SEPARACIÓN ENTRE SUGERENCIAS Y TEXTO FINAL
+
+  El informe no contiene sugerencias pendientes: el texto de las 12 secciones
+  y de los anexos está redactado para quedarse. Las decisiones que el
+  asistente no podía tomar por el grupo están en decisiones_pendientes.txt,
+  con la sección y el elemento exacto que se vería afectado. Ese archivo no
+  se adjunta al entregable.

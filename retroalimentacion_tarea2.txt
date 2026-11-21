@@ -1,0 +1,11 @@
+Se acepta la propuesta procedan con la siguiente tarea; recordar que NO se aceptará el uso de funciones o sistemas ya desarrollados disponibles como APIs o prompts o servicios disponibles como “Cajas Negras”.
+Su propuesta es viable si se define como clasificación retrospectiva y no proponer anticipar el siniestro.
+Para este tipo de datos tabulados no usar DL. Aunque en esta tarea no necesitan aún definir con precisión los algoritmos a usar, en la siguiente entrega deben empezar a definirlo. Notar que la implementación de un solo algoritmo poco profundo no es suficiente como proyecto de fin de curso en esta materia. Pueden incluir la comparación y la correspondiente discusión de por lo menos 5 diferentes tipos de modelos ML y seleccionar el mejor para la implementación de su interfaz. Pero, el problema debe formularse primero en función de información disponible y uso esperado.
+
+Retroalimentación
+En el reporte identifican 17236 siniestros y 1656 con fallecidos en sitio, y no incluyen directamente condiciones de las víctimas como predictores, pero la “causa probable” se conoce al investigar el hecho, por lo que su uso exige distinguir análisis retrospectivo de alerta previa. Es decir, la etiqueta no representa muertes posteriores ni la gravedad clínica. Notar que con datos de enero–septiembre no pueden sostener conclusiones sobre dos semestres completos o toda variabilidad anual.
+
+Correcciones para la tarea 3
+1. Definir las etiquetas y fecha de corte. Verificar que ningún campo derive en desenlace.
+2. Precisar el uso retrospectivo o el instante predictivo y revisar especialmente la causa probable; describir datos faltantes y categorías desconocidas.
+3. Establecer pruebas temporales y métricas de la clase fatal, calibrar y comparar con reglas sencillas. Ajustar el análisis de estabilidad a los meses disponibles.
