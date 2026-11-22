@@ -1,5 +1,6 @@
 @startuml M4_estados
 ' Figura 4: ciclo de vida del registro y qué información existe en cada estado.
+skinparam dpi 200
 skinparam defaultFontSize 16
 skinparam shadowing false
 skinparam state {
@@ -16,7 +17,7 @@ Consolidado --> Publicado : corte al 30/09/2026
 Publicado --> [*]
 
 state ParteLevantado {
-  ParteLevantado : T_parte = instante del proyecto
+  ParteLevantado : T_parte = instante del análisis retrospectivo
   ParteLevantado : información del conjunto A
   ParteLevantado : el recuento de víctimas ya existe,\npero no se usa como entrada
 }

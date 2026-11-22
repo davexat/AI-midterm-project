@@ -1,9 +1,11 @@
 @startuml M1_casos_de_uso
-' Figura 1: actores y casos de uso. CU1 y CU2 quedan fuera de la frontera
-' porque los ejecutan entes externos; el proyecto consume su resultado.
-skinparam defaultFontSize 19
+' Figura 1: actores del problema y casos de uso. CU1 a CU4 producen el dato;
+' CU5 a CU9 forman el ámbito del análisis retrospectivo de la gravedad.
+skinparam dpi 200
+skinparam defaultFontSize 17
 skinparam shadowing false
 skinparam packageStyle rectangle
+left to right direction
 skinparam usecase {
   BackgroundColor #F5F5F5
   BorderColor #333333
@@ -13,37 +15,33 @@ actor "Ente de control\n(Policía, CTE,\nmunicipios)" as EC
 actor "ANT" as ANT
 actor "INEC" as INEC
 actor "Gobierno autónomo\ndescentralizado" as GAD
-actor "Equipo analista" as EQ
 
-usecase "CU1 Registrar parte" as CU1
-usecase "CU2 Consolidar y publicar\nla base mensual" as CU2
+usecase "CU1 Registrar el parte\nen el sitio" as CU1
+usecase "CU2 Asignar la\ncausa probable" as CU2
+usecase "CU3 Consolidar y publicar\nla base acumulada" as CU3
+usecase "CU4 Publicar los\ntotales oficiales" as CU4
 
-rectangle "Análisis retrospectivo de la gravedad\n(alcance del proyecto)" {
-  usecase "CU3 Contrastar totales\ncon reportes oficiales" as CU3
-  usecase "CU4 Construir la etiqueta" as CU4
-  usecase "CU5 Delimitar la información\npermitida" as CU5
-  usecase "CU6 Comparar gravedad\nentre grupos" as CU6
-  usecase "CU7 Evaluar la clasificación\ncon casos posteriores" as CU7
-  usecase "CU8 Consultar el resultado\nen el prototipo" as CU8
-  usecase "CU9 Documentar\nlas limitaciones" as CU9
+rectangle "Análisis retrospectivo de la gravedad\n(ámbito del problema)" {
+  usecase "CU5 Identificar las circunstancias\nasociadas a siniestros graves" as CU5
+  usecase "CU6 Clasificar la gravedad\nde un siniestro registrado" as CU6
+  usecase "CU7 Verificar la correspondencia\ncon las cifras oficiales" as CU7
+  usecase "CU8 Distinguir la información\ndisponible al levantar el parte" as CU8
+  usecase "CU9 Medir el aporte de\nla causa probable" as CU9
 }
 
 EC --> CU1
-ANT --> CU2
-INEC --> CU3
-GAD --> CU8
-ANT --> CU8
-EQ --> CU3
-EQ --> CU4
-EQ --> CU5
-EQ --> CU6
-EQ --> CU7
-EQ --> CU9
+EC --> CU2
+ANT --> CU3
+INEC --> CU4
+ANT --> CU5
+GAD --> CU5
+ANT --> CU6
+GAD --> CU6
+CU7 <-- INEC
 
-CU6 ..> CU4 : <<include>>
-CU6 ..> CU5 : <<include>>
-CU7 ..> CU3 : <<include>>
-CU7 ..> CU5 : <<include>>
-CU8 ..> CU7 : <<include>>
-CU9 ..> CU7 : <<extend>>
+CU5 ..> CU7 : <<include>>
+CU5 ..> CU8 : <<include>>
+CU6 ..> CU7 : <<include>>
+CU6 ..> CU8 : <<include>>
+CU9 ..> CU6 : <<extend>>
 @enduml

@@ -279,7 +279,7 @@ def tabla_a4(datos):
     ]
     texto = escribir_tabla(
         r"Contraste con cifras oficiales y verificación de fuga",
-        "tab:a4", "p{5.1cm}p{2.0cm}p{5.4cm}p{1.4cm}",
+        "tab:a4", "p{4.6cm}p{2.7cm}p{5.0cm}p{1.2cm}",
         ["Concepto", "Archivo", "Referencia", "Dif."],
         filas,
         nota=(r"Referencias: INEC [1] y ANT [7] para los totales; [2] para el archivo. "
@@ -336,28 +336,28 @@ def tabla_a5(datos):
 
 # --- Tablas A6 y A7: particiones y ventanas móviles -----------------------
 def tabla_a6(datos):
-    cortes = [("Entrenamiento", 1, 6), ("Validación", 7, 7), ("Prueba", 8, 9)]
+    cortes = [("Referencia", 1, 6), ("Ajuste", 7, 7), ("Verificación", 8, 9)]
     filas = []
     for nombre, desde, hasta in cortes:
         grupo = datos[datos["mes"].between(desde, hasta)]
         filas.append(fila(nombre,
-                          "%s a %s" % (MESES[desde - 1], MESES[hasta - 1]),
+                          ("%s a %s" % (MESES[desde - 1], MESES[hasta - 1])
+                           if desde != hasta else MESES[desde - 1]),
                           entero(len(grupo)), entero(grupo["grave"].sum()),
                           porcentaje(grupo["grave"].mean() * 100, 2)))
     texto = escribir_tabla(
-        r"Particiones temporales para la evaluación",
+        r"Tramos temporales del periodo disponible",
         "tab:a6", "llrrr",
-        ["Partición", "Meses", "Siniestros", "Graves", r"\% graves"],
+        ["Tramo", "Meses", "Siniestros", "Graves", r"\% graves"],
         filas,
-        nota=(r"El umbral de decisión se fija con la validación y se aplica sin cambios "
-              r"en la prueba. Cálculo propio (Anexo B)."))
+        nota=(r"Los tramos respetan el orden temporal: los meses de verificación son "
+              r"posteriores a los demás (criterios CA-04 y CA-05). Cálculo propio (Anexo B)."))
     return guardar("tabla_a6.tex", texto), filas
 
 
 def tabla_a7(datos):
     filas = []
     for m in range(3, 9):
-        entrena = datos[datos["mes"] <= m]
         prueba = datos[datos["mes"] == m + 1]
         filas.append(fila("Ventana %d" % (m - 2),
                           "Ene--%s" % MESES[m - 1],
@@ -367,10 +367,10 @@ def tabla_a7(datos):
     texto = escribir_tabla(
         r"Ventanas móviles para revisar la estabilidad",
         "tab:a7", "lllrrr",
-        ["Ventana", "Entrena", "Evalúa", "Siniestros", "Graves", r"\% graves"],
+        ["Ventana", "Meses previos", "Mes verificado", "Siniestros", "Graves", r"\% graves"],
         filas,
-        nota=(r"Cada ventana entrena con los meses anteriores al que evalúa y conserva el "
-              r"orden temporal. Con estas ventanas se comprueba el criterio CA-06. "
+        nota=(r"Cada ventana contrasta un mes con todos los meses anteriores y conserva el "
+              r"orden temporal. Con estas ventanas se comprueba el criterio CA-07. "
               r"Cálculo propio (Anexo B)."))
     return guardar("tabla_a7.tex", texto), filas
 

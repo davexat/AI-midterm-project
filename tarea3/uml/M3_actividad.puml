@@ -1,7 +1,8 @@
 @startuml M3_actividad
-' Figura 3: proceso desde el levantamiento del parte hasta el informe,
-' con los tres carriles y las excepciones previstas.
-skinparam defaultFontSize 18
+' Figura 3: cómo se produce y circula el dato del siniestro, con las
+' excepciones que condicionan el análisis como ramas del flujo.
+skinparam dpi 200
+skinparam defaultFontSize 16
 skinparam shadowing false
 skinparam activity {
   BackgroundColor #F5F5F5
@@ -12,34 +13,36 @@ skinparam activity {
 |Ente de control|
 start
 :Atender el siniestro en el sitio;
-:Levantar el parte\n(fecha, hora, lugar, tipo, vehículos,\nparticipantes y condición);
-:Investigar la causa probable;
-note right
-  Excepciones: parte incompleto,
-  valores "ND" o "no identificado",
-  identificador repetido y
-  fallecimiento posterior al evento.
-end note
-
-|ANT|
-:Consolidar y validar los registros;
-:Publicar el archivo mensual acumulado;
-
-|Equipo analista|
-:Descargar una copia con fecha;
-:Contrastar los totales con el INEC;
-if (¿la diferencia\nes mayor al 1 %?) then (sí)
-  :Documentar y explicar\nla diferencia;
+:Levantar el parte: fecha, hora, lugar,\ntipo de siniestro y vehículos (conjunto A);
+if (¿algún campo\nsin dato?) then (sí)
+  :Registrar el campo como\n"ND" o "no identificado";
 else (no)
 endif
-:Construir la etiqueta (FALLECIDOS >= 1);
-:Separar las entradas A y B\ndel desenlace y de las excluidas;
-:Caracterizar los datos;
-fork
-  :Comparar la gravedad\nentre grupos (OE1);
-fork again
-  :Evaluar la clasificación\ncon casos posteriores (OE2);
-end fork
-:Integrar el informe\ncon sus limitaciones;
+:Registrar a los participantes\ny su condición (desenlace);
+if (¿la persona fallece\ndespués del evento?) then (sí)
+  :Mantenerla registrada\ncomo "LESIONADO";
+else (no)
+endif
+:Investigar y asignar la causa\nprobable (conjunto B);
+:Enviar el parte a la ANT;
+
+|ANT|
+:Consolidar los partes\nde los 16 entes de control;
+note right
+  El archivo conserva los defectos
+  de origen: escrituras distintas,
+  identificadores repetidos
+  y valores "ND".
+end note
+:Publicar el archivo acumulado del año;
+|INEC|
+:Procesar los mismos registros;
+:Publicar los totales trimestrales;
+|Gobierno autónomo descentralizado|
+:Consultar el archivo y los totales;
+if (¿los totales responden qué\ncircunstancias se asocian\ncon fallecidos en sitio?) then (no)
+  :Necesidad no cubierta: relacionar\nlas circunstancias del parte\ncon la gravedad registrada;
+else (sí)
+endif
 stop
 @enduml

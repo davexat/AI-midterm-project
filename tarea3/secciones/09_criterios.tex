@@ -1,6 +1,9 @@
 \section{Criterios de aceptación y evidencia de éxito}
 
-Los criterios permiten decidir si el problema fue abordado sin fijar un algoritmo. Los umbrales se fijan antes de evaluar los resultados de prueba y se mantienen sin cambios; el registro de esa decisión forma parte de la evidencia.
+Los criterios permiten decidir si el problema fue abordado sin fijar un algoritmo ni exigir un resultado favorable. Cada uno pide una evidencia concreta; los valores de referencia sirven para interpretarla, y si no se alcanzan, el criterio se cumple igualmente cuando el resultado se reporta y se explica.
+
+\paragraph{Condiciones de evaluación.} Como la proporción de graves baja con el tiempo (sección~6.2), un reparto aleatorio de los casos mezclaría meses distintos y daría una idea optimista del desempeño. Por eso los criterios se verifican respetando el orden temporal, en tres tramos (Tabla~\ref{tab:a6}): enero a junio como referencia (10.752 siniestros; 10,11\,\% graves), julio como tramo de ajuste (2.181; 8,99\,\%) y agosto a septiembre como verificación con casos posteriores (4.303; 8,67\,\%). La estabilidad se revisa además con ventanas mensuales (Tabla~\ref{tab:a7}). Se descartaron el reparto aleatorio estratificado, por la razón anterior, y la validación cruzada por bloques de meses, porque nueve meses no alcanzan para sostenerla; con más meses o con otro año, esta última pasaría a ser la evaluación principal.
+
 
 \begin{longtable}{p{1.2cm}p{7.9cm}p{3.4cm}p{1.4cm}}
 \caption{Criterios de aceptación y evidencia correspondiente}
@@ -19,12 +22,12 @@ Id & Criterio & Evidencia & Obj. \\
 CA-01 & Los totales del primer trimestre de 2026 difieren de los del INEC en menos del 1\,\%, o la diferencia se documenta y explica & Tabla de contraste; resultado preliminar: diferencia del 0\,\% & General \\
 CA-02 & Ninguna variable de entrada deriva de la condición, los lesionados o los fallecidos & Revisión de la lista final de variables de la sección~6.4 y de la Tabla~\ref{tab:a4} & OE2 \\
 CA-03 & Todo grupo reportado como de mayor gravedad que el conjunto se presenta con su proporción, el número de casos que lo respalda (mínimo 30) y una medida de incertidumbre & Tabla de grupos, con las cifras de la Tabla~\ref{tab:a5} & OE1 \\
-CA-04 & Evaluada con casos posteriores en el tiempo, la clasificación supera a las dos referencias sencillas en el área bajo la curva precisión--sensibilidad (PR-AUC), con un intervalo de confianza por remuestreo de la diferencia que no incluya el cero; se reportan sensibilidad y precisión a un umbral declarado & Tabla comparativa de al menos cinco modelos y dos referencias & OE2 \\
-CA-05 & El umbral de decisión se fija con la validación de julio y se aplica sin cambios en la prueba de agosto--septiembre & Registro del protocolo de evaluación & OE2 \\
-CA-06 & Las probabilidades estimadas se parecen a las proporciones observadas: se reportan la curva de calibración y el puntaje de Brier, con una diferencia absoluta máxima de 0,05 en los rangos con al menos 30 casos & Gráfico y tabla de calibración & OE2 \\
-CA-07 & La PR-AUC varía menos de 0,05 entre las ventanas móviles mensuales de la Tabla~\ref{tab:a7}; si no ocurre, se declara la variación en lugar de promediarla & Tabla por ventana & OE2 \\
+CA-04 & En el tramo de verificación se reporta la diferencia entre cada modelo y las dos referencias sencillas en el área bajo la curva precisión--sensibilidad (PR-AUC), con su intervalo de confianza por remuestreo, junto con la sensibilidad y la precisión a un umbral declarado. Un modelo se considera superior a las referencias solo si el intervalo no incluye el cero; si ninguno lo logra, ese es el resultado que se informa & Tabla comparativa de al menos cinco modelos y dos referencias & OE2 \\
+CA-05 & El umbral de decisión se fija con el tramo de ajuste (julio) y se aplica sin cambios al de verificación (agosto--septiembre) & Registro del protocolo de evaluación & OE2 \\
+CA-06 & Se reportan la curva de calibración y el puntaje de Brier del modelo seleccionado; en los rangos con al menos 30 casos se señalan las diferencias mayores a 0,05 entre la probabilidad estimada y la proporción observada & Gráfico y tabla de calibración & OE2 \\
+CA-07 & Se reporta la PR-AUC en cada ventana móvil mensual de la Tabla~\ref{tab:a7}; si varía más de 0,05 entre ventanas, la variación se declara en lugar de promediarla & Tabla por ventana & OE2 \\
 CA-08 & El informe declara que los resultados son asociaciones, retrospectivos, de nueve meses y con gravedad medida en el sitio & Sección de limitaciones & General \\
 CA-09 & El prototipo devuelve probabilidad, circunstancias asociadas y la advertencia de uso retrospectivo; otra persona lo ejecuta con el mismo archivo & Demostración y lista de pasos & OE3 \\
 \end{longtable}
 
-La forma de medir cada objetivo queda así completa: OE1 se comprueba con CA-03, OE2 con CA-02 y CA-04 a CA-07, y OE3 con CA-09. CA-01 y CA-08 son transversales porque afectan a los tres. El hecho de que CA-04 exija un intervalo que no incluya el cero no supone dar por ganada la comparación: con 373 siniestros graves en la prueba (Tabla~\ref{tab:a6}), los intervalos serán amplios, y eso debe leerse como un límite de los datos y no como un fallo del método.
+Con 373 siniestros graves en el tramo de verificación (Tabla~\ref{tab:a6}), los intervalos de CA-04 serán amplios; un intervalo que incluya el cero se lee como un límite de los datos disponibles y no como un fallo del análisis.

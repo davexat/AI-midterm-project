@@ -1,6 +1,7 @@
 @startuml M5_secuencia
-' Figura 5: circulación de la información entre los actores.
-skinparam defaultFontSize 18
+' Figura 5: circulación de la información entre los actores del problema.
+skinparam dpi 200
+skinparam defaultFontSize 16
 skinparam shadowing false
 skinparam sequence {
   ArrowColor #333333
@@ -11,20 +12,24 @@ skinparam sequence {
 
 participant "Ente de control" as EC
 participant "ANT" as ANT
-participant "Equipo analista" as EQ
 participant "INEC" as INEC
-participant "Usuario institucional" as USR
+participant "Gobierno autónomo\ndescentralizado" as GAD
 
-EC -> ANT : parte del siniestro
-ANT -> EQ : archivo mensual acumulado
-INEC -> EQ : totales del trimestre
-EQ -> EQ : contrastar totales
-alt diferencia mayor al 1 %
-  EQ -> EQ : documentar y explicar la diferencia
+EC -> ANT : parte con circunstancias (A)\ny condición de los participantes
+EC -> ANT : causa probable tras investigar (B)
+alt fallecimiento posterior al evento
+  EC -> ANT : la persona sigue registrada como LESIONADO
 end
-EQ -> EQ : construir etiqueta y separar entradas (A, B)
-EQ -> EQ : caracterizar y evaluar (OE1, OE2)
-EQ -> USR : resultados agregados y limitaciones
-USR -> EQ : consulta retrospectiva en el prototipo
-EQ --> USR : probabilidad, circunstancias asociadas\ny advertencia de uso retrospectivo
+ANT -> ANT : consolidar los partes de los entes
+ANT -> INEC : registros consolidados
+ANT -> GAD : archivo acumulado del año
+INEC -> GAD : totales trimestrales
+GAD -> GAD : buscar qué circunstancias se asocian\ncon fallecidos en sitio
+alt territorio con menos de 30 siniestros
+  GAD -> GAD : la proporción local no es confiable
+end
+note over GAD
+  El archivo trae el desenlace, pero no
+  la relación entre circunstancias y gravedad.
+end note
 @enduml

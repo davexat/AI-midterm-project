@@ -4,15 +4,13 @@
 
 El Instituto Nacional de Estadística y Censos registró 4.789 siniestros de tránsito, 4.032 personas lesionadas y 603 fallecidas en el sitio durante el primer trimestre de 2026 \cite{ref1}. Esas cifras dimensionan el fenómeno, pero no explican por qué unos siniestros terminan en una muerte y otros no. La gravedad de un evento va desde el daño material hasta el fallecimiento, y no se deduce de una característica aislada: depende de cómo se combinan el momento, el lugar, el tipo de vía y las circunstancias en que ocurrió.
 
-A partir de esa observación, la pregunta de este proyecto queda formulada así: dado un siniestro ya ocurrido y registrado por la Agencia Nacional de Tránsito (ANT) \cite{ref2}, determinar si registra al menos un fallecido en el lugar de los hechos, usando únicamente las circunstancias consignadas en el parte y ninguna información sobre las víctimas. Se trata de una clasificación retrospectiva. No anticipa siniestros, no funciona como alerta previa y tampoco mide la gravedad clínica ni las muertes posteriores al evento. Lo que permite evaluar es cuánto se sabe de esa asociación a partir de lo que el parte registra y si un método computacional aporta algo sobre una referencia sencilla.
+A partir de esa observación, la pregunta de este proyecto queda formulada así: dado un siniestro ya ocurrido y registrado por la Agencia Nacional de Tránsito (ANT) \cite{ref2}, determinar si registra al menos un fallecido en el lugar de los hechos, usando únicamente las circunstancias del evento que el parte registra al levantarse ---momento, lugar, tipo de siniestro, vehículos y ente de control, que forman el conjunto~A de la sección~2.3--- y sin ningún dato de los participantes: ni su condición, edad o sexo, ni el recuento de lesionados y fallecidos. Se trata de una clasificación retrospectiva. No anticipa siniestros, no funciona como alerta previa y tampoco mide la gravedad clínica ni las muertes posteriores al evento.
 
-La complejidad aparece al mirar la estructura de los datos. El archivo de la ANT tiene 17.236 filas y 374 columnas, y alrededor del 82,6\,\% de sus celdas está vacío (Tabla~\ref{tab:a1}). La razón es que 301 columnas describen a participantes, mientras que la mediana es de dos participantes por siniestro y el máximo de 43; gran parte de esas columnas no tiene nada que registrar. Sobre lo poco que queda, las variables son categóricas y tienen muchos valores: 24 provincias, 210 cantones, 14 tipos de siniestro y 26 causas probables. El número de combinaciones crece más rápido que los casos disponibles, y aparecen grupos con pocos siniestros cuyas proporciones de graves son inestables: con diez casos, una sola diferencia cambia la proporción en diez puntos.
-
-Ese problema se agrava por el desbalance. Solo 1.656 siniestros son graves (9,61\,\%); declarar que ninguno lo es acierta el 90,4\,\% de las veces sin aportar información útil, de modo que la exactitud global no sirve como medida. Tampoco es estable la etiqueta: depende de quién levanta el parte y de las convenciones de registro, y su frecuencia baja de 11,6\,\% en enero a 8,8\,\% en septiembre (Tabla~\ref{tab:a2}). Un reparto aleatorio de los datos mezclaría meses con proporciones distintas y daría una idea optimista del desempeño sobre casos nuevos. Como ninguna característica decide por sí sola el desenlace, queda por resolver si los métodos de aprendizaje automático clásico superan a reglas simples y en qué medida; las secciones siguientes fijan qué significa ``superar'' y con qué información se cuenta para intentarlo.
+El problema es computacionalmente complejo por tres razones que se combinan, documentadas con detalle en la sección~6. Primero, la información útil es dispersa y de alta cardinalidad: el 82,6\,\% de las celdas del archivo está vacío y las variables del evento son categóricas con muchos valores ---24 provincias, 210 cantones, 13 tipos de siniestro y 26 causas---, de modo que las combinaciones crecen más rápido que los casos y muchos grupos tienen proporciones inestables. Segundo, la clase de interés es minoritaria: solo el 9,61\,\% de los siniestros es grave, y declarar que ninguno lo es acierta el 90,4\,\% de las veces sin aportar información. Tercero, la proporción de graves y la composición de los registros cambian en el tiempo, por lo que un resultado obtenido con unos meses no se traslada sin más a los siguientes. Como ninguna circunstancia decide por sí sola el desenlace, la pregunta exige métodos capaces de combinar muchas variables categóricas, y queda por determinar si superan a reglas sencillas.
 
 \subsection{Definiciones operativas}
 
-Para que la pregunta anterior tenga una respuesta verificable hay que fijar la unidad de análisis, la etiqueta, el corte temporal y el instante en que se supone disponible la información.
+Para que la pregunta tenga una respuesta verificable se fijan la unidad de análisis, la etiqueta, la fecha de corte y el instante en que se supone disponible la información.
 
 \begin{table}[htbp]
 \centering
@@ -27,13 +25,13 @@ Unidad de análisis & Un siniestro, es decir, una fila del archivo. \\
 Etiqueta & \texttt{grave}~$=~1$ si \texttt{FALLECIDOS}~$\geq~1$; \texttt{grave}~$=~0$ en caso contrario. Se construye a partir del conteo de fallecidos y no se usa como entrada. \\
 Fecha de corte & Registros con \texttt{FECHA} entre el 01/01/2026 y el 30/09/2026 del archivo \emph{BDD\_Septiembre\_2026} de la ANT \cite{ref2}, descargado en octubre de 2026. Las 17.236 filas pertenecen a ese periodo (Tabla~\ref{tab:a1}). \\
 Instante de uso & Retrospectivo: después de que el ente de control levanta el parte y antes de usar el recuento de víctimas. No es un instante previo al siniestro. \\
-Convención de registro & La hoja \texttt{VICTIMAS} del archivo \cite{ref2} indica, en las notas de la columna \texttt{CONDICION}, que en la Comisión de Tránsito del Ecuador (CTE) los fallecidos y fallecidos \emph{in situ} se registran como \texttt{FALLECIDO}, mientras que los fallecidos \emph{post mortem} se registran como \texttt{LESIONADO}. La etiqueta significa, por tanto, ``registra al menos un fallecido en la base de la ANT'', equivalente a ``fallecido en el lugar de los hechos'' según esa convención. El total del primer trimestre (603) coincide con la cifra del INEC (Tabla~\ref{tab:a4}). \\
+Convención de registro & La hoja \texttt{VICTIMAS} del archivo \cite{ref2} indica, en las notas de la columna \texttt{CONDICION}, que en la Comisión de Tránsito del Ecuador (CTE) los fallecidos y fallecidos \emph{in situ} se registran como \texttt{FALLECIDO}, mientras que los fallecidos \emph{post mortem} se registran como \texttt{LESIONADO}. La etiqueta significa, por tanto, ``registra al menos un fallecido en la base de la ANT'', equivalente a ``fallecido en el lugar de los hechos'' según esa convención. \\
 Lo que la etiqueta no representa & Muertes posteriores al evento, gravedad de las lesiones ni responsabilidad de ninguna persona. \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-La convención anterior es la única que puede verificarse con el archivo y con el reporte oficial del mismo periodo; otras definiciones de severidad habituales en la literatura no son comparables con esta etiqueta \cite{ref8}. Por eso el informe habla siempre de siniestros ``graves'' en el sentido de la tabla~\ref{tab:definiciones}, y no de siniestros ``fatales'' en un sentido clínico. Con la etiqueta ya definida, conviene precisar en qué momento existe cada dato.
+La convención anterior es la única que puede verificarse con el archivo y con el reporte oficial del mismo periodo; otras definiciones de severidad habituales en la literatura no son comparables con esta etiqueta \cite{ref8}. Por eso el informe habla siempre de siniestros ``graves'' en el sentido de la tabla~\ref{tab:definiciones}, y no de siniestros ``fatales'' en un sentido clínico.
 
 \subsection{Instante de uso e información disponible}
 
@@ -41,15 +39,15 @@ Un parte no se produce de una vez. Primero se levanta en el sitio, con la fecha,
 
 \begin{itemize}[leftmargin=1.6em]
 \item \textbf{Conjunto A}: lo consignado al levantar el parte. Es la entrada principal, porque es lo que existe en el instante retrospectivo definido arriba.
-\item \textbf{Conjunto B}: el conjunto A más el código y la descripción de la causa probable. Se evalúa por separado para cuantificar cuánto añade la causa y con qué riesgo.
+\item \textbf{Conjunto B}: el conjunto A más el código y la descripción de la causa probable. Sirve como contraste: la diferencia entre lo que permite distinguir A y lo que permite distinguir B mide cuánto añade la causa. Una diferencia grande se interpreta con cautela, porque puede deberse a que la causa refleja el desenlace.
 \end{itemize}
 
-En ninguno de los dos conjuntos se incluyen las columnas que describen a las víctimas. La distinción entre A y B aparece en los estados del registro (Figura~\ref{fig:m4}) y es la que permite decidir qué escenario se toma como principal.
+En ninguno de los dos conjuntos se incluyen las columnas que describen a las víctimas. El momento en que aparece cada conjunto se modela en la Figura~\ref{fig:m4}.
 
 \subsection{Decisiones de definición}
 
-\begin{longtable}{p{2.0cm}p{2.8cm}p{5.1cm}p{4.0cm}}
-\caption{Decisiones tomadas al definir el problema y efecto de revertirlas}
+\begin{longtable}{>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}p{5.1cm}>{\raggedright\arraybackslash}p{4.0cm}}
+\caption{Decisiones tomadas al definir el problema y condiciones que las cambiarían}
 \label{tab:decisiones}\\
 \toprule
 Decisión & Alternativas consideradas & Elección y razón & Qué la cambiaría \\
@@ -62,34 +60,8 @@ Decisión & Alternativas consideradas & Elección y razón & Qué la cambiaría 
 \endhead
 \bottomrule
 \endfoot
-D1. Instante de uso & Retrospectivo sin causa; retrospectivo con causa; predictivo previo al evento & El retrospectivo sin causa como escenario principal y el de causa como contraste. El tipo de siniestro y los vehículos solo existen después del evento, de modo que la alternativa predictiva es inviable con estos datos y fue descartada en la retroalimentación. & Que se autorice la causa como entrada principal: en ese caso el conjunto B pasaría a ser el escenario base. \\
+D1. Instante de uso & Retrospectivo sin causa; retrospectivo con causa; predictivo previo al evento & El retrospectivo sin causa como escenario principal y el de causa como contraste. El tipo de siniestro y los vehículos solo existen después del evento, de modo que la alternativa predictiva es inviable con estos datos. & Que se demuestre que la causa probable se asigna en el sitio, antes de conocer el desenlace: en ese caso el conjunto B pasaría a ser el escenario base. \\
 D2. Causa probable & Excluirla; incluirla sin más; separarla en dos escenarios & Separarla. Se asigna durante la investigación y puede reflejar el desenlace; la separación hace visible su aporte y su riesgo. & Que el conjunto B no mejore de forma apreciable a A: entonces se justificaría prescindir de la causa. \\
-D3. Forma de la etiqueta & Binaria ($\geq 1$ fallecido); ``con víctimas''; ordinal con niveles de fallecidos; conteo de fallecidos & Binaria, como en la propuesta aceptada. Definir ``con víctimas'' vuelve mucho más frecuente la clase positiva, como ocurre en el estudio sobre Quito \cite{ref3}; solo 159 siniestros tienen dos o más fallecidos (Tabla~\ref{tab:a1}), cifra insuficiente para niveles ordinales. & Un cambio de etiqueta obliga a rehacer el desbalance, las referencias y los criterios de aceptación. \\
-D4. Evaluación & Reparto aleatorio estratificado; un corte temporal; ventanas móviles mensuales & Corte temporal como evaluación principal y ventanas móviles como comprobación de estabilidad. El corte propuesto es enero--junio (10.752 siniestros, 1.087 graves, 10,11\,\%), julio (2.181; 196; 8,99\,\%) y agosto--septiembre (4.303; 373; 8,67\,\%), según la Tabla~\ref{tab:a6}. La proporción baja entre tramos, y esa diferencia debe discutirse y no ocultarse. & Que se prefiera validación cruzada por bloques; el corte se conservaría entonces como verificación adicional. \\
-D5. Participantes y ubicación exacta & Usar todas las columnas; derivar resúmenes; excluirlas & Excluir las 301 columnas de participantes, porque la condición revela el desenlace, y excluir coordenadas, dirección y nombre de la vía, por privacidad. & Un resumen derivado solo se admitiría si se demuestra que no contiene la condición ni se obtiene de ella. \\
+D3. Forma de la etiqueta & Binaria ($\geq 1$ fallecido); ``con víctimas''; ordinal con niveles de fallecidos; conteo de fallecidos & Binaria. Definir ``con víctimas'' vuelve mucho más frecuente la clase positiva, como ocurre en el estudio sobre Quito \cite{ref3}; solo 159 siniestros tienen dos o más fallecidos (Tabla~\ref{tab:a1}), cifra insuficiente para niveles ordinales. & Disponer de la gravedad de las lesiones o de los fallecimientos posteriores, o de suficientes siniestros con varios fallecidos para sostener niveles ordinales. \\
+D4. Participantes y ubicación exacta & Usar todas las columnas; derivar resúmenes; excluirlas & Excluir las 301 columnas de participantes, porque la condición revela el desenlace, y excluir coordenadas, dirección y nombre de la vía, por privacidad. & Un resumen derivado solo se admitiría si se demuestra que no contiene la condición ni se obtiene de ella. \\
 \end{longtable}
-
-Las cinco decisiones responden a la retroalimentación recibida y a lo que el propio archivo permite sostener. La tabla~\ref{tab:correcciones} registra de dónde viene cada una.
-
-\subsection{Correcciones de la Tarea 2 incorporadas}
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{Observaciones de la Tarea 2 y cambios realizados}
-\label{tab:correcciones}
-\begin{tabularx}{\textwidth}{p{4.7cm}X l}
-\toprule
-Observación & Cambio realizado & Sección \\
-\midrule
-La propuesta es viable solo como clasificación retrospectiva & El problema, el objetivo y el alcance pasan de ``estimar'' a ``clasificar retrospectivamente''; se define el instante de uso & 2.1--2.3, 3, 10 \\
-Definir la etiqueta y la fecha de corte; verificar que ningún campo derive del desenlace & Definiciones operativas y comprobación de la coincidencia entre \texttt{FALLECIDOS} y las columnas de condición & 2.2, 6.4, Tabla~\ref{tab:a4} \\
-Revisar la causa probable; describir faltantes y categorías desconocidas & Conjuntos A y B; descripción cuantificada de faltantes y valores \texttt{ND} & 2.3, 6.3, Tabla~\ref{tab:a3} \\
-Pruebas temporales, métricas de la clase fatal, calibración y reglas sencillas & Evaluación temporal, PR-AUC, sensibilidad, precisión, calibración y dos referencias & 2.4, 9 \\
-Con enero--septiembre no se sostienen dos semestres ni toda la variabilidad anual & La estabilidad se revisa por meses y el límite queda declarado & 8, 9, 10 \\
-No usar cajas negras ni aprendizaje profundo; comparar al menos cinco tipos de modelos & Se incorporan como restricciones y como requerimiento de comparación & 7, 8 \\
-La Tarea 2 descartaba toda herramienta, pero se espera una interfaz & El alcance incluye la exposición del modelo seleccionado en un prototipo académico & 3, 10 \\
-Inconsistencia detectada al revisar la Tarea 2: el criterio de estabilidad comparaba semestres & Se reemplaza por ventanas móviles de los meses disponibles & 7, 9 \\
-\bottomrule
-\end{tabularx}
-\end{table}

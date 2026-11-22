@@ -1,17 +1,53 @@
-\section{Código y fuentes de los modelos}
+\section{Procedimiento de verificación}
 
-Este anexo contiene el código que produce las tablas del Anexo~A y las fuentes PlantUML de los cinco modelos de la sección~5. Para reproducir las cifras se necesita Python con \texttt{pandas} y \texttt{openpyxl}; basta con ejecutar \texttt{python analisis\_tarea3.py} desde la carpeta \texttt{codigo}. El programa comprueba las invariantes antes de escribir las tablas: si el archivo cambiara y las cifras dejaran de coincidir, se detiene con un error en lugar de generar un informe inconsistente.
+Este anexo resume el procedimiento con el que se obtienen las tablas del Anexo~A a partir de la hoja \texttt{BDD\_2026} del archivo de la ANT. Se presenta en pseudocódigo; su implementación usa solo operaciones generales de lectura, agrupación y conteo de datos. Antes de generar las tablas, el procedimiento comprueba las invariantes del paso~9: si el archivo cambiara y las cifras dejaran de coincidir, se detiene en lugar de producir resultados inconsistentes.
 
-\lstinputlisting[style=python,caption={Código de verificación y generación de las tablas A1 a A7 (\texttt{codigo/analisis\_tarea3.py})},label={lst:analisis}]{codigo/analisis_tarea3.py}
+\begin{lstlisting}[style=codigo,caption={Procedimiento de verificación y generación de las tablas A1 a A7},label={lst:procedimiento}]
+Entrada: hoja BDD_2026 del archivo de la ANT (corte al 30/09/2026)
+Salida:  tablas A1 a A7
 
-Las figuras de la sección~5 se generaron con PlantUML. Se incluyen las cinco fuentes para que los modelos puedan revisarse y modificarse sin depender de un archivo de dibujo cerrado.
+1. Cargar
+   datos <- leer la hoja BDD_2026
+   para cada siniestro: grave <- 1 si FALLECIDOS >= 1, si no 0
+                        mes   <- mes de FECHA
 
-\lstinputlisting[style=plantuml,caption={M1. Casos de uso (\texttt{uml/M1\_casos\_de\_uso.puml})}]{uml/M1_casos_de_uso.puml}
+2. Tabla A1 (estructura y etiqueta)
+   contar filas, columnas y celdas vacías
+   separar las 301 columnas de participantes (7 campos x 43) de las del evento
+   participantes por siniestro: mediana y máximo
+   contar graves y siniestros con 2 o más fallecidos
 
-\lstinputlisting[style=plantuml,caption={M2. Clases de dominio (\texttt{uml/M2\_clases.puml})}]{uml/M2_clases.puml}
+3. Tabla A2 (variación mensual)
+   para cada mes: siniestros, graves, % de graves y % de partes de la PNE
 
-\lstinputlisting[style=plantuml,caption={M3. Actividad (\texttt{uml/M3\_actividad.puml})}]{uml/M3_actividad.puml}
+4. Tabla A3 (calidad)
+   contar ND, valor 0 y vacíos en la jerarquía de la vía
+   contar el tipo del primer vehículo no identificado
+   contar escrituras distintas del tipo de siniestro y horas en texto
+   contar identificadores repetidos y filas duplicadas
 
-\lstinputlisting[style=plantuml,caption={M4. Estados (\texttt{uml/M4\_estados.puml})}]{uml/M4_estados.puml}
+5. Tabla A4 (contraste y fuga)
+   totales del primer trimestre y de enero a mayo frente a INEC y ANT
+   para cada siniestro: comparar el conteo de CONDICION_k = FALLECIDO
+                        con FALLECIDOS (y LESIONADO con LESIONADOS)
 
-\lstinputlisting[style=plantuml,caption={M5. Secuencia (\texttt{uml/M5\_secuencia.puml})}]{uml/M5_secuencia.puml}
+6. Tabla A5 (gravedad por grupos)
+   para cada variable del conjunto A y para la causa probable:
+       agrupar y obtener n, graves y % de graves
+       omitir grupos con menos de 30 casos (causas: menos de 100)
+
+7. Tabla A6 (tramos temporales)
+   referencia = ene-jun; ajuste = jul; verificación = ago-sep
+   para cada tramo: siniestros, graves y % de graves
+
+8. Tabla A7 (ventanas móviles)
+   para m desde marzo hasta agosto:
+       meses previos = ene..m; mes verificado = m+1
+       para el mes verificado: siniestros, graves y % de graves
+
+9. Verificar antes de escribir
+   exigir 17.236 filas y 1.656 graves
+   exigir 4.789 siniestros y 603 fallecidos en el primer trimestre
+   exigir coincidencia total entre CONDICION_k y FALLECIDOS
+   exigir que ninguna FECHA esté vacía
+\end{lstlisting}

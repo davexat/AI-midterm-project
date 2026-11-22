@@ -1,8 +1,8 @@
 \section{Declaración de uso de IA generativa y bitácora de decisiones}
 
-\paragraph{Declaración.} Se usó la herramienta Claude (Anthropic) como apoyo en tres tareas: explorar con código la hoja principal del archivo de la ANT (conteos, consistencia y faltantes), comparar alternativas de definición y redactar borradores del informe. En esta revisión se empleó además un asistente de IA para reestructurar la redacción, generar los modelos UML y verificar las cifras con el script del Anexo~B. El grupo revisó cada afirmación y es responsable de la exactitud del contenido; las cifras de la sección~6 pueden reproducirse ejecutando ese script.
+\paragraph{Declaración.} Se usó la herramienta Claude (Anthropic) como apoyo en tres tareas: explorar con código la hoja principal del archivo de la ANT (conteos, consistencia y faltantes), comparar alternativas de definición y redactar borradores del informe. En esta revisión se empleó además un asistente de IA para reestructurar la redacción, generar los modelos UML y verificar las cifras con el procedimiento del Anexo~B. El grupo revisó cada afirmación y es responsable de la exactitud del contenido; las cifras de la sección~6 pueden reproducirse con ese procedimiento. El Anexo~C registra las alternativas exploradas con apoyo de la IA y la decisión que tomó el grupo en cada caso.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \small
 \caption{Recomendaciones de IA verificadas, corregidas o descartadas}
@@ -12,11 +12,14 @@
 \# & Recomendación de la IA & Verificación & Resultado \\
 \midrule
 1 & Excluir las columnas de condición de los participantes porque revelan el desenlace & El conteo de condición \texttt{FALLECIDO} coincide con \texttt{FALLECIDOS} en los 17.236 registros (Tabla~\ref{tab:a4}) & Verificada y adoptada \\
-2 & Tratar la causa probable como un conjunto de información separado (B) y no como una variable más & Se contrastó con la retroalimentación del profesor y con las proporciones por causa, que van del 1,9\,\% al 23,1\,\% (Tabla~\ref{tab:a5}) & Corregida respecto a la Tarea 2 \\
-3 & Mantener la comparación entre primer y segundo semestre como criterio de estabilidad & Los datos cubren nueve meses (Tabla~\ref{tab:a1}) y el profesor lo observó & Descartada; se usan ventanas por meses \\
-4 & Tomar como válidas las cifras del borrador sin recalcularlas & Se ejecutó el script del Anexo~B sobre el archivo original; dos cifras del borrador no coincidían (el porcentaje de celdas vacías y el reparto de columnas entre evento y participantes) y se corrigieron & Corregida; el script queda como evidencia \\
+2 & Tratar la causa probable como un conjunto de información separado (B) y no como una variable más & Se contrastó con la retroalimentación recibida y con las proporciones por causa, que van del 1,9\,\% al 23,1\,\% (Tabla~\ref{tab:a5}) & Corregida respecto a la propuesta inicial \\
+3 & Mantener la comparación entre primer y segundo semestre como criterio de estabilidad & Los datos cubren nueve meses (Tabla~\ref{tab:a1}) y la retroalimentación recibida lo señaló & Descartada; se usan ventanas por meses \\
+4 & Tomar como válidas las cifras del borrador sin recalcularlas & Se aplicó el procedimiento del Anexo~B sobre el archivo original; dos cifras del borrador no coincidían (el porcentaje de celdas vacías y el reparto de columnas entre evento y participantes) y se corrigieron & Corregida; el procedimiento queda como evidencia \\
+5 & Incluir al equipo de análisis como actor de M1 y como carril de M3, con sus tareas como casos de uso & Al revisar M1, M3 y M5 el grupo constató que describían el trabajo del proyecto y no el problema & Corregida; los actores son solo ente de control, ANT, INEC y gobiernos locales \\
+6 & Mostrar el prototipo de consulta como caso de uso de M1 y como mensaje final de M5 & El prototipo es diseño de la solución, que no corresponde a los modelos de análisis & Descartada; queda solo en OE3 y en el alcance \\
+7 & Describir el conjunto B y las ventanas móviles en términos de entrenar y comparar modelos & En el análisis del problema no se entrena nada; esos elementos son condiciones de evaluación & Corregida; se describen en la sección~9 y en las Tablas~\ref{tab:a6} y~\ref{tab:a7} \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Las cuatro recomendaciones muestran el mismo criterio: ninguna se aceptó por venir de una herramienta de IA. Las que se adoptaron se comprobaron contra el archivo o contra la retroalimentación recibida, y las que no resistieron esa comprobación se descartaron o se corrigieron antes de redactar esta versión.
+Las siete recomendaciones muestran el mismo criterio: ninguna se aceptó por venir de una herramienta de IA. Las que se adoptaron se comprobaron contra el archivo o contra la retroalimentación recibida, y las que no resistieron esa comprobación se descartaron o se corrigieron. Las filas 5 a 7 surgieron al revisar los modelos de análisis.

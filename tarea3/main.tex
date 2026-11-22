@@ -1,5 +1,7 @@
+% !TEX program = xelatex
 % Tarea #3 — Análisis formal del problema computacional complejo
-% Compilación: latexmk -pdf main.tex   (o: pdflatex main.tex, dos veces)
+% Compilación: XeLaTeX dos veces (xelatex main.tex), o latexmk -xelatex main.tex.
+% No compila con pdfLaTeX porque usa fontspec.
 \documentclass[11pt,a4paper,spanish]{article}
 
 % Se compila con XeLaTeX para que los acentos del código de los anexos se
@@ -131,11 +133,18 @@ Fecha de entrega & 22 de noviembre de 2026
 \input{secciones/09_criterios}
 \input{secciones/10_alcance}
 \input{secciones/11_referencias}
-\input{secciones/12_ia}
 
 % ------------------------------------------------------------------- anexos
 \appendix
 \input{anexos/A_tablas}
 \input{anexos/B_codigo}
+\input{anexos/C_decisiones}
+
+% ------------------------------------------------ declaración de uso de IA
+% El enunciado la pide al final del reporte: va después de los anexos y
+% conserva el número 12.
+\renewcommand{\thesection}{\arabic{section}}
+\setcounter{section}{11}
+\input{secciones/12_ia}
 
 \end{document}

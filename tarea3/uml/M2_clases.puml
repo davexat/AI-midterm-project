@@ -2,6 +2,7 @@
 ' Figura 2: clases del dominio del problema con el papel de cada atributo.
 ' Estereotipos: A = entrada del conjunto A, B = entrada solo del conjunto B,
 ' desenlace = nunca es entrada, excluida = fuera del análisis.
+skinparam dpi 200
 skinparam defaultFontSize 16
 skinparam shadowing false
 skinparam classAttributeIconSize 0

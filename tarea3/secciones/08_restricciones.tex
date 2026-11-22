@@ -5,16 +5,16 @@ Las restricciones delimitan lo que el proyecto puede hacer. Los supuestos son la
 \paragraph{Restricciones.}
 
 \begin{description}[leftmargin=1.6em,style=nextline,itemsep=0.25em]
-\item[R-01. Académica.] No se aceptan funciones, sistemas, interfaces de programación (APIs), \emph{prompts} o servicios ya desarrollados usados como ``cajas negras'' para resolver el problema. El código incluido en el Anexo~B está escrito por el grupo y usa únicamente operaciones de bibliotecas generales.
-\item[R-02. Académica.] No se usa aprendizaje profundo con estos datos tabulares.
-\item[R-03. Académica.] Un solo algoritmo poco profundo no basta: se comparan al menos cinco tipos de modelos de aprendizaje automático clásico.
-\item[R-04. De datos.] Un solo periodo (01/01 al 30/09/2026), registros administrativos y gravedad medida en el lugar de los hechos.
-\item[R-05. Temporal.] Los nueve meses disponibles no sostienen conclusiones sobre dos semestres completos ni sobre la variabilidad anual.
-\item[R-06. Metodológica.] La evaluación debe ser temporal y usar métricas de la clase grave.
-\item[R-07. Legal y de privacidad.] Se usa información pública con fines académicos; se excluyen los campos personales y de ubicación exacta conforme a la Ley Orgánica de Protección de Datos Personales \cite{ref5}, y solo se publican resultados agregados.
-\item[R-08. Ética.] Los resultados describen asociaciones, no causas ni responsabilidades. No deben usarse para estigmatizar provincias, cantones o conductores, ni para sancionar.
-\item[R-09. Operativa.] El proyecto no produce un sistema operativo para las autoridades. Un uso real exigiría actualizar datos, validar con nuevos periodos y definir responsables.
-\item[R-10. De recursos y tiempo.] Equipos personales sin infraestructura especial y un plazo de dos a tres semanas para el desarrollo posterior a esta tarea.
+\item[R-01. Académica, sobre el uso de herramientas.] No se usan servicios externos ni sistemas ya desarrollados que entreguen la clasificación resuelta, como interfaces de programación de modelos generativos o \emph{prompts}. Se permiten bibliotecas generales de análisis de datos y de aprendizaje automático, siempre que el grupo defina y justifique cada paso del procedimiento.
+\item[R-02. Académica, sobre el tipo de modelos.] No se usa aprendizaje profundo con estos datos tabulares.
+\item[R-03. Académica, sobre la amplitud de la comparación.] Un solo algoritmo poco profundo no basta: se comparan al menos cinco tipos de modelos de aprendizaje automático clásico.
+\item[R-04. De cobertura de los datos.] Un solo periodo (01/01 al 30/09/2026), registros administrativos y gravedad medida en el lugar de los hechos.
+\item[R-05. Temporal, sobre el alcance de las conclusiones.] Los nueve meses disponibles no sostienen conclusiones sobre dos semestres completos ni sobre la variabilidad anual.
+\item[R-06. Metodológica, sobre la forma de evaluar.] La evaluación debe ser temporal y usar métricas de la clase grave.
+\item[R-07. Legal y de privacidad de los datos.] Se usa información pública con fines académicos; se excluyen los campos personales y de ubicación exacta conforme a la Ley Orgánica de Protección de Datos Personales \cite{ref5}, y solo se publican resultados agregados.
+\item[R-08. Ética, sobre el uso de los resultados.] Los resultados describen asociaciones, no causas ni responsabilidades. No deben usarse para estigmatizar provincias, cantones o conductores, ni para sancionar.
+\item[R-09. Operativa, sobre el alcance institucional.] El proyecto no produce un sistema operativo para las autoridades. Un uso real exigiría actualizar datos, validar con nuevos periodos y definir responsables.
+\item[R-10. De recursos y tiempo.] Equipos de cómputo personales sin infraestructura especial y un plazo de dos a tres semanas para el desarrollo.
 \end{description}
 
 \paragraph{Supuestos.}
@@ -28,4 +28,6 @@ Las restricciones delimitan lo que el proyecto puede hacer. Los supuestos son la
 \item[H-06.] El archivo descargado es una copia fiel y estable de la publicación de la ANT.
 \end{description}
 
-Entre estas restricciones hay tensiones que conviene explicitar. R-01 puede chocar con RNF-05 si algún modelo resulta costoso de ejecutar; R-05 limita lo que puede concluirse sobre estabilidad; y R-07 excluye información que podría mejorar la clasificación. En los tres casos se prioriza la restricción legal o académica y se declara el costo sobre el desempeño. La tensión entre R-01 y RNF-05, además, debe resolverse en la Tarea~4, cuando se concretice qué bibliotecas de aprendizaje automático se usan y se justifique que su empleo no equivale a delegar la solución en una caja negra.
+\paragraph{Dependencias.} El problema depende de elementos que el proyecto no controla y de un orden entre sus propias partes. Hacia fuera, la etiqueta depende de la convención de registro de la ANT y de la CTE (H-05): si cambiara la forma de contar a los fallecidos, cambiaría el significado de \texttt{grave}. La calidad de las entradas depende del registro de cada ente de control (H-01 y H-03), y la validez del archivo depende de que coincida con las cifras del INEC (CA-01). Hacia dentro, el conjunto~B depende del conjunto~A, porque es A más la causa probable y solo existe después de investigar el hecho (Figura~\ref{fig:m4}); la comparación entre grupos y la evaluación dependen de que antes se verifique el archivo y se delimite la información disponible (CU7 y CU8); y OE3 depende de OE2, porque solo puede comunicar un modelo ya evaluado.
+
+Entre estas restricciones hay tensiones que conviene explicitar. R-05 limita lo que puede concluirse sobre estabilidad, y R-07 excluye información que podría mejorar la clasificación. En ambos casos se prioriza la restricción legal o metodológica y se declara su costo sobre el desempeño.

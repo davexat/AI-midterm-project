@@ -1,0 +1,26 @@
+\section{Registro de decisiones}
+
+Este anexo registra cómo se llegó a las definiciones de la sección~2. Para cada observación recibida sobre la propuesta inicial se exploraron alternativas con apoyo de la herramienta de IA declarada en la sección~12. El grupo decidió con base en esa observación y en lo que el archivo de la ANT permitía comprobar, y la última columna indica dónde quedó reflejada cada decisión.
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{5.0cm}p{1.6cm}}
+\caption{Observaciones recibidas, alternativas evaluadas y decisión adoptada}
+\label{tab:correcciones}\\
+\toprule
+Observación recibida & Alternativas evaluadas & Decisión adoptada & Sección \\
+\midrule
+\endfirsthead
+\multicolumn{4}{l}{\footnotesize\itshape (continuación)}\\
+\toprule
+Observación recibida & Alternativas evaluadas & Decisión adoptada & Sección \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+La propuesta es viable solo como clasificación retrospectiva & Estimación previa al evento; clasificación retrospectiva con o sin causa & Clasificación retrospectiva con un instante de uso definido; la alternativa predictiva se descarta porque el tipo de siniestro y los vehículos solo existen después del evento & 2.1--2.3, 3, 10 \\
+Definir la etiqueta y la fecha de corte; verificar que ningún campo derive del desenlace & Etiqueta binaria, ``con víctimas'', ordinal o conteo & Etiqueta binaria con corte al 30/09/2026; se comprueba que las columnas de condición coinciden con \texttt{FALLECIDOS} y se excluyen & 2.2, 6.4 \\
+Revisar la causa probable; describir faltantes y categorías desconocidas & Excluir la causa, incluirla sin más o separarla & Conjuntos A y B; faltantes y valores \texttt{ND} cuantificados y tratados como categoría propia & 2.3, 6.3 \\
+Pruebas temporales, métricas de la clase fatal, calibración y reglas sencillas & Reparto aleatorio, corte temporal o ventanas móviles & Corte temporal con ventanas móviles; PR-AUC, sensibilidad, precisión, calibración y dos referencias & 9 \\
+Con enero--septiembre no se sostienen dos semestres ni toda la variabilidad anual & Comparar semestres o ventanas mensuales & La estabilidad se revisa por ventanas mensuales y el límite queda declarado & 8, 9, 10 \\
+No usar cajas negras ni aprendizaje profundo; comparar al menos cinco tipos de modelos & Uno o varios modelos; bibliotecas generales o servicios externos & Se incorporan como restricciones R-01 a R-03 y como el requerimiento RF-07, que exige comparar al menos cinco tipos de modelos & 7, 8 \\
+Se espera una interfaz para el modelo seleccionado & Sin interfaz o con una consulta académica & Se incluye una consulta retrospectiva del modelo seleccionado como objetivo OE3 & 3, 10 \\
+\end{longtable}
